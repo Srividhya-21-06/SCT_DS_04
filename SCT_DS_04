@@ -1,0 +1,72 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv("traffic_accidents.csv")
+
+# Set style for plots
+sns.set(style="whitegrid")
+
+# 1. Accidents due to Weather Condition
+plt.figure(figsize=(10, 5))
+weather_counts = df['weather_condition'].value_counts().head(10)
+sns.barplot(x=weather_counts.index, y=weather_counts.values, palette='coolwarm')
+plt.title('Top 10 Weather Conditions During Accidents')
+plt.xticks(rotation=45)
+plt.ylabel('Number of Accidents')
+plt.xlabel('Weather Condition')
+plt.tight_layout()
+plt.show()
+
+# 2. Accidents due to Lighting Condition
+plt.figure(figsize=(7, 7))
+lighting_counts = df['lighting_condition'].value_counts()
+plt.pie(lighting_counts, labels=lighting_counts.index, autopct='%1.1f%%', colors=sns.color_palette('pastel'))
+plt.title('Accidents due to Lighting Condition')
+plt.show()
+
+# 3. Accidents by Hour
+plt.figure(figsize=(10, 5))
+hour_counts = df['crash_hour'].value_counts().sort_index()
+sns.lineplot(x=hour_counts.index, y=hour_counts.values, marker='o')
+plt.title('Accidents by Hour of Day')
+plt.xlabel('Hour')
+plt.ylabel('Number of Accidents')
+plt.xticks(range(0, 24))
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+# 4. Accidents by Day of the Week
+plt.figure(figsize=(8, 5))
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+day_counts = df['crash_day_of_week'].value_counts().sort_index()
+sns.barplot(x=days, y=day_counts.values, palette='Set2')
+plt.title('Accidents by Day of the Week')
+plt.xticks(rotation=30)
+plt.ylabel('Number of Accidents')
+plt.tight_layout()
+plt.show()
+
+# 5. Accidents due to Road Surface Condition
+plt.figure(figsize=(10, 5))
+road_cond_counts = df['roadway_surface_cond'].value_counts().head(10)
+sns.barplot(x=road_cond_counts.index, y=road_cond_counts.values, palette='Blues_d')
+plt.title('Top 10 Road Surface Conditions')
+plt.xticks(rotation=45)
+plt.ylabel('Number of Accidents')
+plt.xlabel('Road Condition')
+plt.tight_layout()
+plt.show()
+
+# 6. Top 10 Primary Causes of Accidents
+plt.figure(figsize=(12, 5))
+cause_counts = df['prim_contributory_cause'].value_counts().head(10)
+sns.barplot(x=cause_counts.index, y=cause_counts.values, palette='Reds')
+plt.title('Top 10 Primary Causes of Accidents')
+plt.xticks(rotation=45)
+plt.ylabel('Number of Accidents')
+plt.xlabel('Cause')
+plt.tight_layout()
+plt.show()
